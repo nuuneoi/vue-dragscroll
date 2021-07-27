@@ -144,24 +144,24 @@ const init = function (el, binding, vnode) {
 
         if (binding.modifiers.pass) {
           // compute and scroll
-          target.scrollLeft -= binding.modifiers.y ? -0 : newScrollX
-          target.scrollTop -= binding.modifiers.x ? -0 : newScrollY
+          target.scrollLeft -= (binding.modifiers.y || binding.value.y) ? -0 : newScrollX
+          target.scrollTop -= (binding.modifiers.x || binding.value.x) ? -0 : newScrollY
           if (target === document.body) {
-            target.scrollLeft -= binding.modifiers.y ? -0 : newScrollX
-            target.scrollTop -= binding.modifiers.x ? -0 : newScrollY
+            target.scrollLeft -= (binding.modifiers.y || binding.value.y) ? -0 : newScrollX
+            target.scrollTop -= (binding.modifiers.x || binding.value.x) ? -0 : newScrollY
           }
 
           // if one side reach the end scroll container
-          if (isEndX || binding.modifiers.y) {
+          if (isEndX || (binding.modifiers.y || binding.value.y)) {
             scrollBy(-newScrollX, 0)
           }
-          if (isEndY || binding.modifiers.x) {
+          if (isEndY || (binding.modifiers.x || binding.value.x)) {
             scrollBy(0, -newScrollY)
           }
         } else {
           // disable one scroll direction in case x or y is specified
-          if (binding.modifiers.x) newScrollY = -0
-          if (binding.modifiers.y) newScrollX = -0
+          if ((binding.modifiers.x || binding.value.x)) newScrollY = -0
+          if ((binding.modifiers.y || binding.value.y)) newScrollX = -0
 
           // compute and scroll
           target.scrollLeft -= newScrollX
